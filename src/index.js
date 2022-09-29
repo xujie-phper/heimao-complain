@@ -1,29 +1,16 @@
-import { chromium } from 'playwright'
-import * as XLSX from 'xlsx'
-import ProgressBar from 'progress'
-import { Command } from 'commander'
-import chalk from 'chalk'
-
-const program = new Command()
-
-program
-  .option('-u, --user', 'username')
-  .option('-p, --password', 'password')
-  .option('-l, --link', 'your login page link')
-  .option('-d, --debug', 'open debug mode');
-
-program.parse(process.argv);
-
-const options = program.opts();
-const [username, password, path] = program.args;
+import { chromium } from "playwright";
+import * as XLSX from "xlsx";
+import ProgressBar from "progress";
+import chalk from "chalk";
 
 const log = console.log;
 const recordAllList = [];
 const allFailedList = [];
 const parallelCount = 5;
-const debug = options.debug || false;
 
-(async () => {
+
+export default async function main(props) {
+  const {username, password, path, debug} = props;
   const browser = await chromium.launch({ headless: !debug });
   const loginContext = await browser.newContext();
   const page = await loginContext.newPage();
@@ -38,7 +25,9 @@ const debug = options.debug || false;
   page.on("response", async (response) => {
     if (response.url().indexOf("/message_list") > -1) {
       const text = await response.text();
-      const total = debug ? 10 : Number(text.split('"item_count":')[1].split("}}")[0]);
+      const total = debug
+        ? 10
+        : Number(text.split('"item_count":')[1].split("}}")[0]);
       const listUrl = response
         .url()
         .replace("page_size=10", `page_size=${total}`);
@@ -112,14 +101,14 @@ const debug = options.debug || false;
       /* calculate column width */
       // const max_width = recordAllList.reduce((w, r) => Math.max(w, r['1'].length), 20);
       ws["!cols"] = [{ wch: 20 }];
-      const [, root, user] = process.cwd().split('/')
-      const exportPath = `/${root}/${user}/Downloads`
+      const [, root, user] = process.cwd().split("/");
+      const exportPath = `/${root}/${user}/Downloads`;
       XLSX.writeFile(wb, path || exportPath + "/Report.xlsx");
 
       await browser.close();
     }
   });
-})();
+}
 
 async function extractor(detailList, page, bar, retry = false) {
   let currentRecord;

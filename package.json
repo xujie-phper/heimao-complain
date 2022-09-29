@@ -1,7 +1,10 @@
 {
   "name": "heimao",
-  "version": "1.0.2",
-  "main": "index.js",
+  "version": "1.0.3",
+  "main": "src/index.js",
+  "bin": {
+    "heimao": "bin/heimao"
+  },
   "author": "Xu Jerry",
   "license": "MIT",
   "devDependencies": {
