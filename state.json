@@ -1,0 +1,15 @@
+{
+  "cookies": [
+    {
+      "name": "ULOGIN_IMG",
+      "value": "gz-dff9843a6c08fbf93b85a907474ea008b458",
+      "domain": ".sina.com.cn",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

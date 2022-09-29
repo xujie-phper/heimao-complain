@@ -1,0 +1,26 @@
+{
+  "name": "heimao",
+  "version": "1.0.2",
+  "main": "index.js",
+  "author": "Xu Jerry",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.25.2"
+  },
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "axios": "^0.27.2",
+    "chalk": "^5.0.1",
+    "commander": "^9.4.0",
+    "playwright": "^1.25.2",
+    "progress": "^2.0.3",
+    "xlsx": "^0.18.5"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+ }
+}
