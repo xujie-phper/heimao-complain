@@ -23,6 +23,14 @@
   "engines": {
     "node": ">=16.0.0"
   },
+  "keywords": [
+    "黑猫投诉",
+    "playwright",
+    "node",
+    "xlsx",
+    "js",
+    "数据提取"
+  ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
  }
