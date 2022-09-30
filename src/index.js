@@ -1,16 +1,20 @@
-import { chromium } from "playwright";
-import * as XLSX from "xlsx";
-import ProgressBar from "progress";
-import chalk from "chalk";
+const { chromium } = require("playwright");
+const XLSX = require("xlsx");
+const ProgressBar = require("progress");
+const chalk = require("chalk");
 
 const log = console.log;
 const recordAllList = [];
 const allFailedList = [];
 const parallelCount = 5;
 
+module.exports = async function main(props) {
+  const { username, password, path, debug } = props;
+  if (!username || !password) {
+    log(chalk.red("❌ 请输入黑猫账号和密码, 如： heimao zhangsan 123456"));
+    return;
+  }
 
-export default async function main(props) {
-  const {username, password, path, debug} = props;
   const browser = await chromium.launch({ headless: !debug });
   const loginContext = await browser.newContext();
   const page = await loginContext.newPage();
@@ -108,7 +112,7 @@ export default async function main(props) {
       await browser.close();
     }
   });
-}
+};
 
 async function extractor(detailList, page, bar, retry = false) {
   let currentRecord;

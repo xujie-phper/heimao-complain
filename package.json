@@ -1,6 +1,6 @@
 {
   "name": "heimao",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "main": "src/index.js",
   "bin": {
     "heimao": "bin/heimao"
@@ -10,11 +10,10 @@
   "devDependencies": {
     "@playwright/test": "^1.25.2"
   },
-  "type": "module",
   "scripts": {},
   "dependencies": {
     "axios": "^0.27.2",
-    "chalk": "^5.0.1",
+    "chalk": "^4.0.0",
     "commander": "^9.4.0",
     "playwright": "^1.25.2",
     "progress": "^2.0.3",

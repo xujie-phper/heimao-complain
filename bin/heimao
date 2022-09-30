@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import { Command } from "commander";
-import main from "../src/index.js";
 
-const program = new Command();
+const main = require('../src/index.js');
+const program = require('commander');
 
 program
   .option("-u, --user", "username")
