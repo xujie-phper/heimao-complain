@@ -49,16 +49,16 @@ module.exports = async function main(props) {
         .map((item) => item.substring(4, 51).replaceAll("\\", ""))
         .slice(1);
 
-      // 全部标记为已读
+      // 获取全部已读
+      let readBtn;
       if (!debug) {
         const pageForDetail = await loginContext.newPage();
         await pageForDetail.goto(
           "https://tousu.sina.com.cn/index.php/user/message"
         );
-        const read = await pageForDetail.locator(".readBtn").filter({
+        readBtn = await pageForDetail.locator(".readBtn").filter({
           hasText: "全部已读",
         });
-        await read.click();
       }
 
       // 并行处理
@@ -109,6 +109,8 @@ module.exports = async function main(props) {
       const exportPath = `/${root}/${user}/Downloads`;
       XLSX.writeFile(wb, path || exportPath + "/Report.xlsx");
 
+      // 文件已导出，标记为已读
+      readBtn && await readBtn.click();
       await browser.close();
     }
   });
@@ -207,7 +209,6 @@ async function extractor(detailList, page, bar, retry = false) {
         recordAllList.push(currentRecord);
         bar.tick(1);
       } catch (err) {
-        allFailedList.push(view);
         if (retry) {
           log(
             chalk.red(
@@ -215,7 +216,9 @@ async function extractor(detailList, page, bar, retry = false) {
               chalk.white(`https://${view}`)
             )
           );
+          return;
         }
+        allFailedList.push(view);
       }
     }
   }
